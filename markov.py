@@ -24,7 +24,7 @@ def make_chains(contents):
     For example:
 
         >>> make_chains("hi there mary hi there juanita")
-        {('hi', 'there'): ['mary', 'juanita'], ('there', 'mary'): ['hi'], ('mary', 'hi': ['there']}
+        {('hi', 'there'): ['mary', 'juanita'], ('there', 'mary'): ['hi'], ('mary', 'hi'): ['there']}
     """
     #Opening an empty dictionary
     chains = {}
@@ -40,13 +40,21 @@ def make_chains(contents):
         word_keys = (words[i], words[i + 1])
         #Same as above, only binds chosen_word to third word to create our values
         chosen_word = words[i + 2]
+        
+        #CODE BELOW HANGED AFTER CODE REVIEW
         #Bind word_keys_value to the list of values associated with this key if this key exists.
         #If the key doesn't exist, return an empty list
-        word_key_values = chains.get(word_keys, []) 
+        # word_key_values = chains.get(word_keys, []) 
         #Add chosen word to list of word_key_values
-        word_key_values.append(chosen_word)
+        # word_key_values.append(chosen_word)
         #Assembles dictionary.
-        chains[word_keys] = word_key_values
+        # chains[word_keys] = word_key_values
+
+        #checking for existence
+        if word_keys not in chains:
+            chains[word_keys] = []
+        #Assembles dictionary
+        chains[word_keys].append(chosen_word)
     
     #Line below was used to test number of keys in dictionary     
     #print len(chains)

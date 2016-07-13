@@ -57,26 +57,33 @@ def make_chains(contents):
 
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
-
-    #Make a random choice of key from within a list of keys from the chains dictionary
-    random_word_keys = random.choice(chains.keys())
-
-    text = ' '.join(random_word_keys)
-
-    # Gets the values associated with random_word_keys
-    random_word_key_value = chains.get(random_word_keys)
-    #Makes a random choice of value from within random_word_key_value
-    random_chosen_value = random.choice(random_word_key_value)
     
-    text = text + ' ' + random_chosen_value
+    #Make a random choice of key from within a list of keys from the chains dictionary
+    key = random.choice(chains.keys())
+    text = ' '.join(key)
 
-    # your code goes here
+    #Creating a loop that will continue to iterate until the length of output is > 250 characters
+    while len(text) < 1000:
+        #Gets the values associated with the current key
+        values = chains.get(key)
+        #Because we have elements that have the value of None, but must have way to break out
+        if values == None:
+            break
+        #Makes a random choice of value from within the set of values associate with the current key
+        random_chosen_value = random.choice(values)
+        #Adds additional text to existing text 
+        text = text + ' ' + random_chosen_value
+        #Create a new key using the second word in the current key and the current value
+        key = key[1], random_chosen_value
+    
+    #for word_keys, word_key_values in chains.items():
 
-#Make a loop but make sure it is not an infinite loop
+    #Make a loop but make sure it is not an infinite loop
     return text
 
 
-input_path = "green-eggs.txt"
+# input_path = "green-eggs.txt"
+input_path = "gettysburg.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
